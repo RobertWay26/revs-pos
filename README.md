@@ -1,8 +1,7 @@
 # revs-pos
  
-Hello World
 Mohammad Rafay
-Amaan Chaudhry
+\nAmaan Chaudhry
 Ezra Jeter
 Aiden Stickney
 Robert Way
