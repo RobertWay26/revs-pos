@@ -1,1 +1,1 @@
-UPDATE inventoryitems SET quantityavailable = quantityavailable + 50, lastrestockdate = CURRENT_DATE WHERE ingredientid = (SELECT ingredientid FROM ingredients WHERE name = Fries);
+UPDATE products SET isactive = FALSE WHERE productid NOT IN ( SELECT DISTINCT od.productid FROM orderdetails od JOIN orders o ON od.orderid = o.orderid WHERE o.datetime >= (CURRENT_DATE - INTERVAL '1 year') );
