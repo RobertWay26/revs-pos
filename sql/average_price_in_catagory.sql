@@ -1,0 +1,1 @@
+SELECT c.name AS category_name, AVG(p.price) AS average_price FROM categories c JOIN products p ON c.categoryid = p.categoryid GROUP BY c.name;

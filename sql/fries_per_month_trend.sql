@@ -1,0 +1,1 @@
+SELECT DATE_TRUNC('month', o.datetime) AS month, SUM(od.quantity) AS quantity_sold FROM orders o JOIN orderdetails od ON o.orderid = od.orderid WHERE od.productid = (SELECT productid FROM products WHERE name = ‘Fries’) GROUP BY DATE_TRUNC('month', o.datetime) ORDER BY month;
