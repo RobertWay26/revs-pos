@@ -1,4 +1,4 @@
-# revs-pos
+# Rev's Grille POS
 
 # Group Members:
 Mohammad Rafay  
