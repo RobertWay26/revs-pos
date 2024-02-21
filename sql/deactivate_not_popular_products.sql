@@ -1,0 +1,1 @@
+UPDATE products SET isactive = FALSE WHERE productid NOT IN ( SELECT DISTINCTod.productid FROM orderdetails od JOIN orders o ON od.orderid = o.orderid WHEREo.datetime >= (CURRENT_DATE - INTERVAL '1 year') );

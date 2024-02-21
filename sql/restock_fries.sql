@@ -1,0 +1,1 @@
+UPDATE inventoryitems SET quantityavailable = quantityavailable + 50, lastrestockdate = CURRENT_DATE WHERE ingredientid = (SELECT ingredientid FROM ingredients WHERE name = Fries);
