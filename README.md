@@ -14,16 +14,16 @@ __Our correctness-demonstrating scripts:__
 <u>Retrieve All Active Products within sides Category</u>
 This SQL script retrieves all active products within the "Sides" category. It selects the name, price, and image URL of products that are marked as active and belong to the "Sides" category.
 
-<u>“Find Products with Low Inventory Items”
+“Find Products with Low Inventory Items” 
 This script finds products with low inventory items. It selects the name of the product and the quantity available from the inventory items table where the quantity available is less than or equal to the reorder level.
 
-<u>“Report Total Sales by Product”
+“Report Total Sales by Product”
 This SQL script generates a report of total sales by product. It calculates the total quantity sold and the total sales amount for each product by joining the order details with the products table and grouping the results by product name.
 
-<u>“Report on Orders grouped by Status”</u>
+“Report on Orders grouped by Status”
 This script provides a report on orders grouped by status. It counts the number of orders and calculates the total sales amount for each order status by grouping the orders table by status.
 
-<u>“List of Orders Placed on a 4/9/2023 with Details”</u>
+“List of Orders Placed on a 4/9/2023 with Details”
 This script lists orders placed on April 9, 2023, along with their details such as order ID, datetime, total amount, status, product name, and quantity. It joins the orders, order details, and products tables to retrieve the required information for the specified date.
 
 <u>“Updates Inventory After Restocking 50 fries”</u>
