@@ -1,0 +1,88 @@
+/* “Retrieve All Active Products within sides Category”
+(products_within_sides.sql)*/
+SELECT p.name, p.price, p.imageurl FROM products p JOIN categories c ON p.categoryid =c.categoryid WHERE p.isactive = TRUE AND c.name = 'Sides';
+
+/* "Find Products with Low Inventory Items"
+(products_low_inventory.sql) */
+SELECT pr.name, ii.quantityavailable FROM inventoryitems ii 
+JOIN ingredients i ON ii.ingredientid = i.ingredientid 
+JOIN productingredients pi ON i.ingredientid = pi.ingredientid 
+JOIN products pr ON pi.productid = pr.productid WHERE ii.quantityavailable <= ii.reorderlevel;
+
+/* “Report Total Sales by Product”
+(total_sales_by_product.sql) */
+SELECT p.name, SUM(od.quantity) AS total_sold, SUM(od.quantity * p.price) AS total_sales FROM orderdetails od JOIN products p ON od.productid = p.productid GROUP BY p.name;
+
+/* “ Report on Orders grouped by Status”
+(group_orders_by_status.sql) */
+SELECT status, COUNT(orderid) AS orders_count, SUM(totalamount) AS total_sales FROM orders GROUP BY status;
+
+/* “List of Orders Placed on a 4/9/2023 with Details”
+(orders_on_4_9_2003_with_details.sql) */
+SELECT o.orderid, o.datetime, o.totalamount, o.status, p.name AS product_name, od.quantity FROM orders o JOIN orderdetails od ON o.orderid = od.orderid JOIN products p ON od.productid = p.productid WHERE DATE(o.datetime) = '2023-04-09';
+
+/* “Updates Inventory After Restocking 50 fries”
+(restock_fries.sql) */
+UPDATE inventoryitems SET quantityavailable = quantityavailable + 50, lastrestockdate = CURRENT_DATE WHERE ingredientid = (SELECT ingredientid FROM ingredients WHERE name = 'Fries');
+
+/* “Deactivate Products Not Sold in Last Year”
+(deactivate_not_popular_products.sql) */
+UPDATE products SET isactive = FALSE WHERE productid NOT IN ( SELECT DISTINCT od.productid FROM orderdetails od JOIN orders o ON od.orderid = o.orderid WHERE o.datetime >= (CURRENT_DATE - INTERVAL '1 year') );
+
+/* “List Categories with the Number of Active Products”
+(active_catagories_in_product.sql) */
+SELECT c.name, COUNT(p.productid) AS active_products FROM categories c JOIN products p ON c.categoryid = p.categoryid WHERE p.isactive = TRUE GROUP BY c.name;
+
+/* “Find Orders Above $150”
+(orders_above_150_price.sql) */
+SELECT orderid, datetime, totalamount, status FROM orders WHERE totalamount >150;
+
+/* “Average Price of Products within Each Category”
+(average_price_in_catagory.sql) */
+SELECT c.name AS category_name, AVG(p.price) AS average_price FROM categories c JOIN products p ON c.categoryid = p.categoryid GROUP BY c.name;
+
+/* “Sales Trend per month for Fries”
+(fries_per_month_trend.sql) */
+SELECT DATE_TRUNC('month', o.datetime) AS month, SUM(od.quantity) AS quantity_sold FROM orders o JOIN orderdetails od ON o.orderid = od.orderid WHERE od.productid = (SELECT productid FROM products WHERE name = 'Fries') GROUP BY DATE_TRUNC('month', o.datetime) ORDER BY month;
+
+/* “Select Count of Orders Grouped by Week”
+(required_query_1.sql) */
+SELECT
+    EXTRACT(YEAR FROM o.datetime) AS year,
+    EXTRACT(WEEK FROM o.datetime) AS week_number,
+    COUNT(*) AS orders_count
+FROM orders o
+WHERE o.datetime >= CURRENT_DATE - INTERVAL '52 weeks'
+GROUP BY year, week_number
+ORDER BY year, week_number;
+
+/* “Select Count of Orders, Sum of Order Total Grouped by Hour”
+(required_query_2.sql) */
+SELECT
+   EXTRACT(HOUR FROM o.datetime) AS hour_of_day,
+   COUNT(*) AS orders_count,
+   SUM(o.totalamount) AS total_sales
+FROM orders o
+GROUP BY hour_of_day
+ORDER BY hour_of_day;
+
+/* “Select Top 10 Sums of Order Total Grouped by Day in Descending Order by Order Total”
+(required_query_3.sql) */
+SELECT
+   DATE(o.datetime) AS date,
+   SUM(o.totalamount) AS total_sales
+FROM orders o
+GROUP BY date
+ORDER BY total_sales DESC
+LIMIT 10;
+
+/* “Select Count of inventory Items from Inventory and Menu Grouped by Menu Item”
+(required_query_4.sql) */
+SELECT
+   p.name AS product_name,
+   COUNT(DISTINCT pi.ingredientid) AS ingredient_count
+FROM productingredients pi
+        JOIN products p ON pi.productid = p.productid
+GROUP BY p.name
+ORDER BY ingredient_count DESC
+LIMIT 20;
