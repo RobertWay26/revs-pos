@@ -75,6 +75,63 @@ This script selects the count of inventory items from the inventory and menu gro
 
 
 
-# ERD
+# Current ERD Diagram
 
-![erd diagram](erd.png)
+![Current erd diagram](erd.png)
+
+# Current Schema
+#### 1. Categories
+  Primary Key: categoryid
+  
+  Attributes: name, description
+  
+  Relationships: One-to-Many with products (one category can have many products).
+#### 2.Ingredients
+  Primary Key: ingredientid
+  
+  Attributes: name, measurementunit
+  
+  Relationships:
+    One-to-Many with inventoryitems (one ingredient can have many inventory items).
+    Many-to-Many with products through productingredients (one ingredient can be in many products; one product can have many ingredients).
+#### 3. InventoryItems
+  Primary Key: inventoryitemid
+  
+  Foreign Key: ingredientid references ingredients
+  
+  Attributes: quantityavailable, reorderlevel, lastrestockdate
+#### 4. OrderDetails
+  Primary Key: orderdetailid
+  
+  Foreign Keys:
+    orderid references orders
+    productid references products
+    
+  Attributes: quantity
+#### 5. Orders
+  Primary Key: orderid
+  
+  Attributes: datetime, totalamount, status
+  
+  Relationships: One-to-Many with orderdetails (one order can have many order details).
+#### 6. ProductIngredients
+  Primary Key: productingredientid
+  
+  Foreign Keys:
+    productid references products
+    ingredientid references ingredients
+    
+  Attributes: quantity
+  
+  Purpose: This table serves as a junction table for the Many-to-Many relationship between products and ingredients.
+#### 7. Products
+  Primary Key: productid
+  
+  Foreign Key: categoryid references categories
+  
+  Attributes: name, price, isactive, imageurl
+  
+  Relationships:
+    One-to-Many with orderdetails (one product can be part of many order details).
+    Many-to-Many with ingredients through productingredients.
+
