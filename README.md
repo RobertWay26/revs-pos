@@ -71,3 +71,10 @@ This script selects the top 10 sums of order total grouped by day in descending 
 “Select Count of Inventory Items from Inventory and Menu Grouped by Menu Item”
 
 This script selects the count of inventory items from the inventory and menu grouped by menu item. It counts the number of unique ingredients for each product by joining the product ingredients and products tables and orders the results by ingredient count in descending order, limiting to the top 20 results.
+
+
+
+
+# ERD
+
+![erd diagram](erd.png)
