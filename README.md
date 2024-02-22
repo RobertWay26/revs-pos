@@ -10,9 +10,9 @@ Roshan Sreedhar
 
 
 
-__Our correctness-demonstrating scripts:__
+# Our correctness-demonstrating scripts:
 
-Retrieve All Active Products within sides Category
+"Retrieve All Active Products within sides Category"
 
 This SQL script retrieves all active products within the "Sides" category. It selects the name, price, and image URL of products that are marked as active and belong to the "Sides" category.
 
